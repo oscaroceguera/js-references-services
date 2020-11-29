@@ -6,9 +6,10 @@ import connectDB from'./config/db'
 import typeDefs from './modules/tags/graphqlSchema'
 import resolvers from './modules/tags/resolvers'
 
+console.log(process.env.NODE_ENV)
 const PORT: string = process.env.PORT as string
 
-const server = new ApolloServer({ typeDefs, resolvers })
+const server = new ApolloServer( { typeDefs, resolvers })
 
 const app: Application = express()
 app.use(cors())

@@ -1,22 +1,46 @@
-import Tag from './models/tags.model'
+import Tag, { ITag } from './models/tags.model'
 
 const resolvers = {
   Query: {
-    tags: () => Tag.find({}),
-    tag: (_: any, args: any) => Tag.findById(args.id)
+    tags: async (): Promise<ITag[]> => {
+      try {
+        return await Tag.find({})
+      } catch(error) {
+        throw new Error(error)
+      }
+    },
+    tag: async (_: any, { _id }: { _id: ITag["_id"]}): Promise<ITag | null> => {
+      try {
+        const tag = await Tag.findById(_id)
+        
+        return tag
+      } catch (error) {
+        throw new Error(error)
+      }
+    }
   },
   Mutation: {
-    addTag: (_: any, tag: any) =>{
-      const newTag = new Tag({ name: tag.name })
-      return newTag.save()
+    addTag: (_: any, tag: any): Promise<ITag> =>{
+      try {
+        const newTag = new Tag({ name: tag.name })
+        return newTag.save()
+      } catch (error) {
+        throw new Error(error)
+      }
     },
-    updateTag: (_: any, args: any)  => {
-      const { id, name } = args
-      return Tag.findByIdAndUpdate(id, { name })
+    updateTag: async (_: any, {_id, name}: { _id: ITag["_id"], name: string }): Promise<ITag | null>  => {
+      try {
+        return await Tag.findByIdAndUpdate(_id, { name })
+      } catch (error) {
+        throw new Error(error)
+      }
     },
-    deleteTag: (_: any, args: any) => {
-      const { id } = args
-      return Tag.findByIdAndRemove(id)
+    deleteTag: async (_: any, { _id }: { _id: ITag["_id"] }): Promise<ITag | null> => {
+      try {
+        return await Tag.findByIdAndRemove(_id)
+      } catch (error) {
+        throw new Error(error)
+      }
     }
   }
 }
