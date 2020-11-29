@@ -1,7 +1,7 @@
 import { Schema, Document, model } from 'mongoose'
 
 export interface ITag extends Document {
-  name: string;
+  name: string
 }
 
 const tagSchema: Schema = new Schema({

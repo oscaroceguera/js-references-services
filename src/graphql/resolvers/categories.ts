@@ -5,14 +5,17 @@ export default {
     categories: async (): Promise<ICategory[]> => {
       try {
         return await Category.find({}).populate('tags')
-      } catch(error) {
+      } catch (error) {
         throw new Error(error)
       }
     },
-    category: async (_: any, { _id }: { _id: ICategory["_id"]}): Promise<ICategory | null> => {
+    category: async (
+      _: any,
+      { _id }: { _id: ICategory['_id'] }
+    ): Promise<ICategory | null> => {
       try {
         const category = await Category.findById(_id).populate('tags')
-        
+
         return category
       } catch (error) {
         throw new Error(error)
@@ -20,7 +23,7 @@ export default {
     }
   },
   Mutation: {
-    addCategory: (_: any, category: any): Promise<ICategory> =>{
+    addCategory: (_: any, category: any): Promise<ICategory> => {
       try {
         const newCategory = new Category(category.CategoryInput)
         return newCategory.save()
@@ -28,14 +31,23 @@ export default {
         throw new Error(error)
       }
     },
-    updateCategory: async (_: any, {_id, CategoryInput}: { _id: ICategory["_id"], CategoryInput: ICategory }): Promise<ICategory | null>  => {
+    updateCategory: async (
+      _: any,
+      {
+        _id,
+        CategoryInput
+      }: { _id: ICategory['_id']; CategoryInput: ICategory }
+    ): Promise<ICategory | null> => {
       try {
         return await Category.findByIdAndUpdate(_id, CategoryInput)
       } catch (error) {
         throw new Error(error)
       }
     },
-    deleteCategory: async (_: any, { _id }: { _id: ICategory["_id"] }): Promise<ICategory | null> => {
+    deleteCategory: async (
+      _: any,
+      { _id }: { _id: ICategory['_id'] }
+    ): Promise<ICategory | null> => {
       try {
         return await Category.findByIdAndRemove(_id)
       } catch (error) {
@@ -44,4 +56,3 @@ export default {
     }
   }
 }
-
