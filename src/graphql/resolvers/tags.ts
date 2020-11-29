@@ -1,6 +1,6 @@
-import Tag, { ITag } from './models/tags.model'
+import Tag, { ITag } from '../../models/Tag'
 
-const resolvers = {
+export default {
   Query: {
     tags: async (): Promise<ITag[]> => {
       try {
@@ -45,4 +45,3 @@ const resolvers = {
   }
 }
 
-export default resolvers

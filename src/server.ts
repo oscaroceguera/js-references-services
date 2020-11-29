@@ -3,8 +3,8 @@ import cors from 'cors'
 import { ApolloServer } from 'apollo-server-express'
 
 import connectDB from'./config/db'
-import typeDefs from './modules/tags/graphqlSchema'
-import resolvers from './modules/tags/resolvers'
+import typeDefs from './graphql/typeDefs'
+import resolvers from './graphql/resolvers'
 
 console.log(process.env.NODE_ENV)
 const PORT: string = process.env.PORT as string
