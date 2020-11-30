@@ -1,9 +1,9 @@
-import { Schema, Document, model } from 'mongoose'
-import { ITag } from './Tag'
+import { Schema, Document, model } from 'mongoose';
+import { ITag } from './Tag';
 
 export interface ICategory extends Document {
-  name: string
-  tags: ITag['_id'][]
+  name: string;
+  tags: ITag['_id'][];
 }
 
 const categorySchema = new Schema({
@@ -17,6 +17,6 @@ const categorySchema = new Schema({
       ref: 'tag'
     }
   ]
-})
+});
 
-export default model<ICategory>('category', categorySchema)
+export default model<ICategory>('category', categorySchema);

@@ -1,6 +1,14 @@
-import { gql } from 'apollo-server-express'
+import { gql } from 'apollo-server-express';
 
 const typeDefs = gql`
+  type Post {
+    _id: ID!
+    title: String!
+    content: String!
+    category: Category!
+    tags: [Tag!]
+  }
+
   type Category {
     _id: ID!
     name: String!
@@ -17,11 +25,27 @@ const typeDefs = gql`
     tags: [ID]
   }
 
+  input PostInput {
+    title: String!
+    content: String!
+    category: ID!
+    tags: [ID!]
+  }
+
+  input PostUpdateInput {
+    title: String
+    content: String
+    category: ID
+    tags: [ID]
+  }
+
   type Query {
     tags: [Tag]
     tag(_id: ID!): Tag
     categories: [Category]
     category(_id: ID!): Category
+    posts: [Post]
+    post(_id: ID!): Post
   }
 
   type Mutation {
@@ -31,7 +55,10 @@ const typeDefs = gql`
     addCategory(CategoryInput: CategoryInput): Category
     updateCategory(_id: ID!, CategoryInput: CategoryInput): Category
     deleteCategory(_id: ID!): Category
+    addPost(PostInput: PostInput!): Post
+    updatePost(_id: ID!, PostUpdateInput: PostUpdateInput!): Post
+    deletePost(_id: ID!): Post
   }
-`
+`;
 
-export default typeDefs
+export default typeDefs;
