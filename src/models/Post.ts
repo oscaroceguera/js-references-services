@@ -35,4 +35,7 @@ const postSchema: Schema = new Schema(
   { timestamps: true }
 );
 
+// Include all string fields int he index, use th e'$**' wildcard
+postSchema.index({ '$**': 'text' });
+
 export default model<IPost>('post', postSchema);

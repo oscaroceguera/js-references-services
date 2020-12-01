@@ -1,3 +1,4 @@
+import { Types } from 'mongoose';
 import Post, { IPost } from '../../models/Post';
 
 export default {
@@ -18,6 +19,53 @@ export default {
           .populate('category')
           .populate('tags');
 
+        return post;
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
+    searchPost: async (
+      _: any,
+      {
+        search,
+        category,
+        tags = []
+      }: { search: string; category: string; tags: string[] }
+    ): Promise<IPost[]> => {
+      let searchQuery = {};
+
+      if (search || category || tags.length > 0) {
+        let andQuery = [];
+
+        if (search) {
+          andQuery.push({
+            $or: [
+              { title: { $regex: search, $options: 'i' } },
+              { content: { $regex: search, $options: 'i' } }
+            ]
+          });
+        }
+
+        if (category) {
+          andQuery.push({ category: Types.ObjectId(category) });
+        }
+
+        if (tags && tags.length > 0) {
+          let andTags: any = [];
+          tags.forEach((element) => {
+            andTags.push({ tags: Types.ObjectId(element) });
+          });
+
+          andQuery.push({ $and: andTags });
+        }
+
+        searchQuery = { $and: andQuery };
+      }
+
+      try {
+        const post = await Post.find(searchQuery)
+          .populate('category')
+          .populate('tags');
         return post;
       } catch (error) {
         throw new Error(error);
