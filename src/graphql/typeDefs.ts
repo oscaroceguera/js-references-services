@@ -46,6 +46,7 @@ const typeDefs = gql`
     category(_id: ID!): Category
     posts: [Post]
     post(_id: ID!): Post
+    searchPost(search: String, category: String, tags: [String]): [Post]
   }
 
   type Mutation {
