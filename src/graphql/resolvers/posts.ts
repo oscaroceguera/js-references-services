@@ -18,7 +18,6 @@ export default {
         const post = await Post.findById(_id)
           .populate('category')
           .populate('tags');
-
         return post;
       } catch (error) {
         throw new Error(error);

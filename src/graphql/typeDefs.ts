@@ -7,6 +7,7 @@ const typeDefs = gql`
     content: String!
     category: Category!
     tags: [Tag!]
+    createdAt: String
   }
 
   type Category {

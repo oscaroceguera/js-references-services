@@ -6,7 +6,7 @@ export default {
       try {
         return await Category.find({}).populate('tags');
       } catch (error) {
-        throw new Error(error);
+        throw new Error(error)
       }
     },
     category: async (
